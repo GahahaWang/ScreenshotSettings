@@ -28,7 +28,7 @@ public class GameMeta {
 
     public static Vec3d getCoordinates(final ClientPlayerEntity p) {
         try {
-            return p.getPos();
+            return p.getEntityPos();
         } catch (NullPointerException e) {
             LOGGER.error("Unable to get player coordinates. Did you try to take the screenshot before you finished loading in?");
             e.printStackTrace();

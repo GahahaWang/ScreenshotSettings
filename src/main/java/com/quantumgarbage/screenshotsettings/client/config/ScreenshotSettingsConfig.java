@@ -88,7 +88,11 @@ public class ScreenshotSettingsConfig implements ConfigData {
                 .binding(
                         "screenshots",
                         () -> INSTANCE.screenshotDirectory,
-                        dir -> INSTANCE.screenshotDirectory = dir
+                        dir -> {
+                            INSTANCE.screenshotDirectory = dir;
+                            if (ScreenshotSettingsClient.onModifyScreenshotDirectory != null)
+                                ScreenshotSettingsClient.onModifyScreenshotDirectory.run();
+                        }
 
                 ).controller(StringControllerBuilder::create)
                 .build();
@@ -100,7 +104,11 @@ public class ScreenshotSettingsConfig implements ConfigData {
                         .binding(
                                 false,
                                 () -> INSTANCE.useCustomScreenshotDirectory,
-                                val -> INSTANCE.useCustomScreenshotDirectory = val
+                                val -> {
+                                    INSTANCE.useCustomScreenshotDirectory = val;
+                                    if (ScreenshotSettingsClient.onModifyScreenshotDirectory != null)
+                                        ScreenshotSettingsClient.onModifyScreenshotDirectory.run();
+                                }
                         ).controller(BooleanControllerBuilder::create)
                         .build())
                 .group(OptionGroup.createBuilder()

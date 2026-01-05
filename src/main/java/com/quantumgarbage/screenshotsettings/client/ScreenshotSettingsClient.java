@@ -27,6 +27,9 @@ public class ScreenshotSettingsClient implements ClientModInitializer {
     public static ScreenshotSettingsConfig CONFIG;
     public static MinecraftClient client;
 
+    // TODO: Mixin to EssentialMod make it Capability
+    public static Runnable onModifyScreenshotDirectory = null;
+
     @Override
     public void onInitializeClient() {
         AutoConfig.register(ScreenshotSettingsConfig.class, GsonConfigSerializer::new);
@@ -34,6 +37,10 @@ public class ScreenshotSettingsClient implements ClientModInitializer {
         client = MinecraftClient.getInstance();
         registerScreenshotCommands();
         LOGGER.info("ScreenshotSettings loaded.");
+        if (onModifyScreenshotDirectory != null) {
+            onModifyScreenshotDirectory.run();
+        }
+
     }
 
     private void registerScreenshotCommands() {

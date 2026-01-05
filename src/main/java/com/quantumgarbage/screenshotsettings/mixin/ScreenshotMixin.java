@@ -28,7 +28,7 @@ public abstract class ScreenshotMixin {
             ordinal = 1
     )
     private static File modifyScreenshotFolder(File original) {
-        return new File(ScreenshotSettingsClient.CONFIG.screenshotDirectory);
+        return new File(ScreenshotSettingsClient.CONFIG.getScreenshotDirectory());
     }
 
     // Util.getIoWorkerExecutor().execute( method_22691 lambda )
